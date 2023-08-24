@@ -6,23 +6,37 @@ import sliderData from "../../data/sliderData.js"
 
 export default function Slider() {
   const [sliderIndex, setSliderIndex] = useState(1)
-
   function toggleImage(indexPayload) {
-    let newState
-    if (indexPayload + sliderIndex > sliderData.length) {
-      newState = 1
-    }
-    else if (indexPayload + sliderIndex < 1) {
-      newState = sliderData.length
-    }
-    else {
-      newState = indexPayload + sliderIndex
-    }
-    setSliderIndex(newState)
+    // slider only manual
+    //   let newState
+    //   if (indexPayload + sliderIndex > sliderData.length) {
+    //     newState = 1
+    //   }
+    //   else if (indexPayload + sliderIndex < 1) {
+    //     newState = sliderData.length
+    //   }
+    //   else {
+    //     newState = indexPayload + sliderIndex
+    //   }
+    //   setSliderIndex(newState)
+
+    setSliderIndex(state => {
+      if (state + indexPayload > sliderData.length) {
+        return 1
+      }
+      else if (indexPayload + state < 1) {
+        return sliderData.length
+      }
+      else {
+        return state + indexPayload
+      }
+    })
   }
 
   useEffect(() => {
     const intervalID = setInterval(() => toggleImage(1), 2000);
+    //cleanUp function
+    return () => clearInterval(intervalID)
   }, [])
 
   return (
